@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="wishlistDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="items">
+          <Key>
+            <PropertyRef Name="itemID" />
+          </Key>
+          <Property Name="itemID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="thumbURL" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="persons">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="prices">
+          <Key>
+            <PropertyRef Name="priceID" />
+          </Key>
+          <Property Name="priceID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="itemID" Type="bigint" Nullable="false" />
+          <Property Name="theURL" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="website" Type="varchar" MaxLength="30" />
+          <Property Name="price" Type="money" />
+        </EntityType>
+        <EntityType Name="wishlistItems">
+          <Key>
+            <PropertyRef Name="wishlistID" />
+            <PropertyRef Name="itemID" />
+          </Key>
+          <Property Name="wishlistID" Type="bigint" Nullable="false" />
+          <Property Name="itemID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="wishlists">
+          <Key>
+            <PropertyRef Name="wishlistID" />
+          </Key>
+          <Property Name="wishlistID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userID" Type="bigint" Nullable="false" />
+          <Property Name="totalAmount" Type="money" />
+        </EntityType>
+        <Association Name="fk_prices">
+          <End Role="items" Type="Self.items" Multiplicity="1" />
+          <End Role="prices" Type="Self.prices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="items">
+              <PropertyRef Name="itemID" />
+            </Principal>
+            <Dependent Role="prices">
+              <PropertyRef Name="itemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_wishlists">
+          <End Role="persons" Type="Self.persons" Multiplicity="1" />
+          <End Role="wishlists" Type="Self.wishlists" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="persons">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="wishlists">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk1_wishlistItems">
+          <End Role="wishlists" Type="Self.wishlists" Multiplicity="1" />
+          <End Role="wishlistItems" Type="Self.wishlistItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="wishlists">
+              <PropertyRef Name="wishlistID" />
+            </Principal>
+            <Dependent Role="wishlistItems">
+              <PropertyRef Name="wishlistID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk2_wishlistItems">
+          <End Role="items" Type="Self.items" Multiplicity="1" />
+          <End Role="wishlistItems" Type="Self.wishlistItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="items">
+              <PropertyRef Name="itemID" />
+            </Principal>
+            <Dependent Role="wishlistItems">
+              <PropertyRef Name="itemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="wishlistDBModelStoreContainer">
+          <EntitySet Name="items" EntityType="Self.items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="persons" EntityType="Self.persons" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="prices" EntityType="Self.prices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="wishlistItems" EntityType="Self.wishlistItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="wishlists" EntityType="Self.wishlists" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_prices" Association="Self.fk_prices">
+            <End Role="items" EntitySet="items" />
+            <End Role="prices" EntitySet="prices" />
+          </AssociationSet>
+          <AssociationSet Name="fk_wishlists" Association="Self.fk_wishlists">
+            <End Role="persons" EntitySet="persons" />
+            <End Role="wishlists" EntitySet="wishlists" />
+          </AssociationSet>
+          <AssociationSet Name="fk1_wishlistItems" Association="Self.fk1_wishlistItems">
+            <End Role="wishlists" EntitySet="wishlists" />
+            <End Role="wishlistItems" EntitySet="wishlistItems" />
+          </AssociationSet>
+          <AssociationSet Name="fk2_wishlistItems" Association="Self.fk2_wishlistItems">
+            <End Role="items" EntitySet="items" />
+            <End Role="wishlistItems" EntitySet="wishlistItems" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="wishlistDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="item">
+          <Key>
+            <PropertyRef Name="itemID" />
+          </Key>
+          <Property Name="itemID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="thumbURL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="prices" Relationship="Self.fk_prices" FromRole="items" ToRole="prices" />
+          <NavigationProperty Name="wishlists" Relationship="Self.wishlistItems" FromRole="items" ToRole="wishlists" />
+        </EntityType>
+        <EntityType Name="person">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="wishlists" Relationship="Self.fk_wishlists" FromRole="persons" ToRole="wishlists" />
+        </EntityType>
+        <EntityType Name="price">
+          <Key>
+            <PropertyRef Name="priceID" />
+          </Key>
+          <Property Name="priceID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="itemID" Type="Int64" Nullable="false" />
+          <Property Name="theURL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="website" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="price1" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="item" Relationship="Self.fk_prices" FromRole="prices" ToRole="items" />
+        </EntityType>
+        <EntityType Name="wishlist">
+          <Key>
+            <PropertyRef Name="wishlistID" />
+          </Key>
+          <Property Name="wishlistID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userID" Type="Int64" Nullable="false" />
+          <Property Name="totalAmount" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="person" Relationship="Self.fk_wishlists" FromRole="wishlists" ToRole="persons" />
+          <NavigationProperty Name="items" Relationship="Self.wishlistItems" FromRole="wishlists" ToRole="items" />
+        </EntityType>
+        <Association Name="fk_prices">
+          <End Role="items" Type="Self.item" Multiplicity="1" />
+          <End Role="prices" Type="Self.price" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="items">
+              <PropertyRef Name="itemID" />
+            </Principal>
+            <Dependent Role="prices">
+              <PropertyRef Name="itemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_wishlists">
+          <End Role="persons" Type="Self.person" Multiplicity="1" />
+          <End Role="wishlists" Type="Self.wishlist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="persons">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="wishlists">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="wishlistItems">
+          <End Role="wishlists" Type="Self.wishlist" Multiplicity="*" />
+          <End Role="items" Type="Self.item" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="wishlistDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="items" EntityType="Self.item" />
+          <EntitySet Name="persons" EntityType="Self.person" />
+          <EntitySet Name="prices" EntityType="Self.price" />
+          <EntitySet Name="wishlists" EntityType="Self.wishlist" />
+          <AssociationSet Name="fk_prices" Association="Self.fk_prices">
+            <End Role="items" EntitySet="items" />
+            <End Role="prices" EntitySet="prices" />
+          </AssociationSet>
+          <AssociationSet Name="fk_wishlists" Association="Self.fk_wishlists">
+            <End Role="persons" EntitySet="persons" />
+            <End Role="wishlists" EntitySet="wishlists" />
+          </AssociationSet>
+          <AssociationSet Name="wishlistItems" Association="Self.wishlistItems">
+            <End Role="wishlists" EntitySet="wishlists" />
+            <End Role="items" EntitySet="items" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="wishlistDBModelStoreContainer" CdmEntityContainer="wishlistDBEntities">
+          <EntitySetMapping Name="items">
+            <EntityTypeMapping TypeName="wishlistDBModel.item">
+              <MappingFragment StoreEntitySet="items">
+                <ScalarProperty Name="itemID" ColumnName="itemID" />
+                <ScalarProperty Name="thumbURL" ColumnName="thumbURL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="persons">
+            <EntityTypeMapping TypeName="wishlistDBModel.person">
+              <MappingFragment StoreEntitySet="persons">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="prices">
+            <EntityTypeMapping TypeName="wishlistDBModel.price">
+              <MappingFragment StoreEntitySet="prices">
+                <ScalarProperty Name="priceID" ColumnName="priceID" />
+                <ScalarProperty Name="itemID" ColumnName="itemID" />
+                <ScalarProperty Name="theURL" ColumnName="theURL" />
+                <ScalarProperty Name="website" ColumnName="website" />
+                <ScalarProperty Name="price1" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="wishlists">
+            <EntityTypeMapping TypeName="wishlistDBModel.wishlist">
+              <MappingFragment StoreEntitySet="wishlists">
+                <ScalarProperty Name="wishlistID" ColumnName="wishlistID" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="wishlistItems" TypeName="wishlistDBModel.wishlistItems" StoreEntitySet="wishlistItems">
+            <EndProperty Name="wishlists">
+              <ScalarProperty Name="wishlistID" ColumnName="wishlistID" />
+            </EndProperty>
+            <EndProperty Name="items">
+              <ScalarProperty Name="itemID" ColumnName="itemID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

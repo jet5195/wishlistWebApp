@@ -1,0 +1,50 @@
+﻿@model WishlistApp3.Models.person
+@using WishlistApp3.Controllers;
+@{
+    var email = "";
+    var password = "";
+
+    if (IsPost)
+    {
+        email = Request.Form["email"];
+        password = Request.Form["password"];
+
+        HomeController hc = new HomeController();
+        var insert = "INSERT INTO persons (email, password) VALUES ({0}, {1})";
+        hc.db.Database.ExecuteSqlCommand(insert, email, password);
+        Response.Redirect("~/Home/Index");
+    }
+
+}
+
+
+
+<div class="card">
+    <form method="post">
+        <h2 class="text-center">Register New Account</h2>
+        <div class="input-group">
+
+                @using (Html.BeginForm("RegButton", "HomeController", FormMethod.Post))
+                {
+                    <input type="text" name="email" placeholder="Email" id="Email"><br>
+                    <input type="password" name="password" placeholder="Password" id="Password"><br>
+
+                    <!--<input type="submit" value="Register"/>-->
+                    <button type="submit" class="btn btn-info" id="register">Register</button><br>
+
+                }
+        </div>
+        <p> Forgot Password?</p>
+        <p>Already have an account? <a href="login">Login</a></p>
+    </form>
+</div>
+
+<script type="text\javascript">
+    $(function(){
+        $("button#register".on('click', function(){
+
+        });
+    });
+</script>
+
+

@@ -23,6 +23,7 @@ namespace WishlistApp3.Models
     
         public long itemID { get; set; }
         public string thumbURL { get; set; }
+        public string itemName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<price> prices { get; set; }

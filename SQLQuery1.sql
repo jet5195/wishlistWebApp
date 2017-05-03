@@ -1,0 +1,1 @@
+﻿SELECT itemID FROM items WHERE itemName = '2 Parrots';

@@ -27,9 +27,4 @@ namespace WishlistApp3.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<wishlist> wishlists { get; set; }
     }
-
-    //public bool isValid(string _email, string _password)
-    //{
-    //    string sql = @"SELECT [email] FROM [persons] "
-    //}
 }

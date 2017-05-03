@@ -4,11 +4,11 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0f7cefcb97864c30815a4012970bef97" Name="Diagram1">
+      <Diagram DiagramId="0f7cefcb97864c30815a4012970bef97" Name="Diagram1" DisplayType="true" ZoomLevel="140">
         <EntityTypeShape EntityType="wishlistDBModel.item" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="wishlistDBModel.person" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="wishlistDBModel.person" Width="1.5" PointX="0.5" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="wishlistDBModel.price" Width="1.5" PointX="7.5" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="wishlistDBModel.wishlist" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="wishlistDBModel.wishlist" Width="1.875" PointX="2.625" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="wishlistDBModel.fk_prices" ManuallyRouted="false" />
         <AssociationConnector Association="wishlistDBModel.fk_wishlists" ManuallyRouted="false" />
         <AssociationConnector Association="wishlistDBModel.wishlistItems" ManuallyRouted="false" />

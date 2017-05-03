@@ -1,36 +1,62 @@
-﻿@model IEnumerable<WishlistApp3.Models.person>
+﻿@model IEnumerable<WishlistApp3.Models.wishlist>
+@using WishlistApp3.Controllers;
 @{
+    if (IsPost) {
+        HomeController hc = new HomeController();
+        var insert = "INSERT INTO wishlists (userID, wishlistName) VALUES (0, 'new list')";
+        hc.db.Database.ExecuteSqlCommand(insert);
+        Response.Redirect("~/Home/Wishlist");
+        //var email = "";
+        //var password = "";
+
+        //if (IsPost)
+        //{
+        //    email = Request.Form["email"];
+        //    password = Request.Form["password"];
+
+        //    HomeController hc = new HomeController();
+        //    var insert = "INSERT INTO persons (email, password) VALUES ({0}, {1})";
+        //    hc.db.Database.ExecuteSqlCommand(insert, email, password);
+        //    Response.Redirect("~/Home/Index");
+        //}
+    }
     ViewBag.Title = "Home Page";
+
 }
+<div class="container">
+    <div class="row">
+        @foreach (var list in Model)
+        {
+        <div class="col-sm-4">
+            <div class="card">
+                <h2 class="card-title"> <a href="/Home/Wishlist">@list.wishlistName</a></h2>
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            @foreach (var person in Model)
-            {
-                <ul>
-                    <li>@person.email</li>
-                    <li>@person.password</li>
-                </ul>
-            }
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+                @{ 
+                IEnumerable<WishlistApp3.Models.item> items = list.items;
+                foreach (var item in items)
+                {
+                <p class="card-text text-center">@item.itemName</p>
+                }
+                }
+            </div>
+        </div>
+        }
+        <!--<div class="col-sm-4">
+            <div class="card">
+                <h2 class="card-title">Wishlist 2</h2>
+                <p class=" card-text text-center">Insert here some text</p>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <h2 class="card-title">Wishlist 3</h2>
+                <p class="card-text text-center">Insert here some more text</p>
+            </div>
+        </div>-->
     </div>
 </div>
+<form method="post">
+    <div class="btn-holder">
+        <button type="submit" class="btn btn-info fab" id="newWishlist">+</button>
+    </div>
+</form>

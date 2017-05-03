@@ -23,6 +23,7 @@ namespace WishlistApp3.Models
         public long wishlistID { get; set; }
         public long userID { get; set; }
         public Nullable<decimal> totalAmount { get; set; }
+        public string wishlistName { get; set; }
     
         public virtual person person { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

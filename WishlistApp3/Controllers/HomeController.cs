@@ -13,7 +13,7 @@ namespace WishlistApp3.Controllers
 
         public ActionResult Index()
         {
-            return View(db.persons.ToList());
+            return View(db.wishlists.ToList());
         }
 
         public ActionResult About()
@@ -40,8 +40,19 @@ namespace WishlistApp3.Controllers
             return View();
         }
 
+        public ActionResult Wishlist()
+        {
+            return View(db.wishlists.ToList());
+        }
+
         [HttpPost]
         public ActionResult RegButton(string button)
+        {
+            return View("TestView");
+        }
+
+        [HttpPost]
+        public ActionResult AddItem(string button)
         {
             return View("TestView");
         }

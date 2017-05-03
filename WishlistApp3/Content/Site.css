@@ -49,11 +49,11 @@ textarea {
 }
 
 #login {
-    width: 84px;
+    width: 100%;
 }
 
 #register {
-    width: 84px;
+    width: 100%;
 }
 
 .fab {
@@ -64,5 +64,9 @@ textarea {
     position: fixed;
     bottom: 2%;
     right: 2%;
+}
+
+#itemTxt {
+    width:100%;
 }
 

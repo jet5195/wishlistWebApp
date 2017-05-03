@@ -1,0 +1,90 @@
+﻿@model IEnumerable<WishlistApp3.Models.wishlist>
+@using WishlistApp3.Controllers;
+
+@{
+    var itemName = "";
+    int listID = 0;
+
+    if (IsPost)
+    {
+        itemName = Request.Form["itemTxt"];
+        listID = Int32.Parse(Request.Form["listID"]);
+
+        HomeController hc = new HomeController();
+        var insert = "INSERT INTO items (itemName) VALUES ({0})";
+        hc.db.Database.ExecuteSqlCommand(insert, itemName);
+
+        
+        var itemID = hc.db.Database.SqlQuery<Int64>("SELECT itemID FROM items WHERE itemName = {0}", itemName).Last();
+
+        insert = "INSERT INTO wishlistItems (wishlistID, itemID) VALUES ({0},{1})";
+        hc.db.Database.ExecuteSqlCommand(insert, listID, itemID);
+
+
+        Response.Redirect("~/Home/Wishlist");
+    }
+
+}
+
+    @foreach (var wishlist in Model)
+    {
+        <div class="card">
+            <form method="post">
+                <h1>@wishlist.wishlistName</h1>
+                <ul class="list-group">
+                    @{ 
+                        //if(wishlist.userID==currentUser)
+                        IEnumerable<WishlistApp3.Models.item> items = wishlist.items;
+                        foreach (var item in items)
+                        {
+                            <li class="list-group-item">@item.itemName</li>
+                            }
+                        }
+
+                    @using (Html.BeginForm("AddItem", "HomeController", FormMethod.Post))
+                    {
+                        <input type="text" name="itemTxt" class="form-control" placeholder="Your Item" id="itemTxt">
+                        <br>
+                        
+                        <input type="hidden" name="listID" id="listID" value="@wishlist.wishlistID" />
+
+                        <button type="submit" class="btn btn-info" id="add">Add Item</button>
+                        <br>
+
+                    }
+
+                </ul>
+            </form>
+        </div>
+       }
+
+        @*<table class="table">
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => wishlist.totalAmount)
+                    @wishlist.wishlistID
+                    @wishlist.person.email
+                    @wishlist.items.
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => wishlist.person.email)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = wishlist.wishlistID }) |
+                    @Html.ActionLink("Details", "Details", new { id = wishlist.wishlistID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = wishlist.wishlistID })
+                </td>
+            </tr>
+            
+
+        </table>*@
+   
+
+<script type="text/javascript">
+
+        $("ul.list-group").sortable();
+
+</script>
+

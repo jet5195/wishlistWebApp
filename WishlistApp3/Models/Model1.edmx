@@ -4,13 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="wishlistDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="wishlistDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="items">
           <Key>
             <PropertyRef Name="itemID" />
           </Key>
           <Property Name="itemID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="thumbURL" Type="varchar" MaxLength="100" />
+          <Property Name="itemName" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="persons">
           <Key>
@@ -45,6 +46,7 @@
           <Property Name="wishlistID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="userID" Type="bigint" Nullable="false" />
           <Property Name="totalAmount" Type="money" />
+          <Property Name="wishlistName" Type="varchar" MaxLength="20" />
         </EntityType>
         <Association Name="fk_prices">
           <End Role="items" Type="Self.items" Multiplicity="1" />
@@ -117,8 +119,7 @@
             <End Role="wishlistItems" EntitySet="wishlistItems" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="wishlistDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -130,6 +131,7 @@
           <Property Name="thumbURL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="prices" Relationship="Self.fk_prices" FromRole="items" ToRole="prices" />
           <NavigationProperty Name="wishlists" Relationship="Self.wishlistItems" FromRole="items" ToRole="wishlists" />
+          <Property Name="itemName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="person">
           <Key>
@@ -160,6 +162,7 @@
           <Property Name="totalAmount" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="person" Relationship="Self.fk_wishlists" FromRole="wishlists" ToRole="persons" />
           <NavigationProperty Name="items" Relationship="Self.wishlistItems" FromRole="wishlists" ToRole="items" />
+          <Property Name="wishlistName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="fk_prices">
           <End Role="items" Type="Self.item" Multiplicity="1" />
@@ -216,6 +219,7 @@
           <EntitySetMapping Name="items">
             <EntityTypeMapping TypeName="wishlistDBModel.item">
               <MappingFragment StoreEntitySet="items">
+                <ScalarProperty Name="itemName" ColumnName="itemName" />
                 <ScalarProperty Name="itemID" ColumnName="itemID" />
                 <ScalarProperty Name="thumbURL" ColumnName="thumbURL" />
               </MappingFragment>
@@ -244,6 +248,7 @@
           <EntitySetMapping Name="wishlists">
             <EntityTypeMapping TypeName="wishlistDBModel.wishlist">
               <MappingFragment StoreEntitySet="wishlists">
+                <ScalarProperty Name="wishlistName" ColumnName="wishlistName" />
                 <ScalarProperty Name="wishlistID" ColumnName="wishlistID" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
                 <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
